@@ -1,4 +1,4 @@
-# Form Validation
+# Customized Video Player
 
 ![image](./imgs/Screenshot.png)
 
