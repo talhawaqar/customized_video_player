@@ -1,7 +1,4 @@
 # Customized Video Player
-
-![image](./imgs/Screenshot.png)
-
 This web app contains a custom video player with a customized look and controls. 
 
 ## Built With
