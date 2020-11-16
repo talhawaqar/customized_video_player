@@ -12,7 +12,7 @@ Project Design Screenshot : ![Project Design](images/Screenshot.png)
 
 ## Live Demo
 
-[Live Demo Link](https://talhawaqar.github.io/Movie-Seat-Booking/)
+[Live Demo Link](https://talhawaqar.github.io/customized_video_player/)
 
 ## Authors
 
