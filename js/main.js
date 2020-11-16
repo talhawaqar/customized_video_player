@@ -1,62 +1,69 @@
-const container = document.querySelector('.container');
-const seats = document.querySelectorAll('.row .seat:not(.occupied)');
-const count = document.getElementById('count');
-const total = document.getElementById('total');
-const movieSelect = document.getElementById('movie');
+const video = document.getElementById("video");
+const play = document.getElementById("play");
+const stop = document.getElementById("stop");
+const progress = document.getElementById("progress");
+const timestamp = document.getElementById("timestamp");
 
-let ticketPrice = +movieSelect.value;
 
-populateUi();
-
-// Set movie data in local storage
-function setMovieData(movieIndex, moviePrice) {
-  localStorage.setItem('selectedMovieIndex', movieIndex);
-  localStorage.setItem('selectedMoviePrice', moviePrice);
-}
-
-// populates the ui using saved data in local localStorage
-function populateUi() {
-  const selectedSeats = JSON.parse(localStorage.getItem('selectedSeats'));
-  if (selectedSeats != null && selectedSeats.length > 0) {
-    seats.forEach((seat, index) => {
-      if (selectedSeats.indexOf(index) > -1) {
-        seat.classList.add('selected');
-      }
-    });
+// Play and pause video
+function toggleVideoStatus() {
+  if (video.paused) {
+    video.play();
   }
-
-  const selectedMovieIndex = localStorage.getItem('selectedMovieIndex');
-
-  if (selectedMovieIndex !== null) {
-    movieSelect.selectedIndex = selectedMovieIndex;
+  else {
+    video.pause();
   }
 }
 
-// update total and count
-function updateSelectedCount() {
-  const selectedSeats = document.querySelectorAll('.row .seat.selected');
-  const selectedSeatsCount = selectedSeats.length;
-
-  const seatsIndex = [...selectedSeats].map((seat) => [...seats].indexOf(seat));
-  localStorage.setItem('selectedSeats', JSON.stringify(seatsIndex));
-
-  count.innerText = selectedSeatsCount;
-  total.innerText = selectedSeatsCount * ticketPrice;
+// Toggle play and pause icon
+function upadatePlayIcon() {
+  if (video.paused) {
+    play.innerHTML = '<i class="fa fa-play fa-2x"></i>';
+  }
+  else {
+    play.innerHTML = '<i class="fa fa-pause fa-2x"></i>';
+  }
 }
 
-//movie select event 
-movieSelect.addEventListener('change', (e) => {
-  ticketPrice = e.target.value;
-  setMovieData(e.target.selectedIndex, e.target.value);
-  updateSelectedCount();
-});
+// Update progress and timestamp
+function updateProgress() {
+  progress.value = (video.currentTime / video.duration) * 100;
 
-// seat click event
-container.addEventListener('click', (e) => {
-  if (e.target.classList.contains('seat') && !e.target.classList.contains('occupied')) {
-    e.target.classList.toggle('selected');
-    updateSelectedCount();
+  //get minutes
+  let mins = Math.floor(video.currentTime / 60);
+  if (mins < 10) {
+    mins = '0' + String(mins);
   }
-});
 
-updateSelectedCount();
+  //get seconds
+  let secs = Math.floor(video.currentTime % 60);
+  if (secs < 10) {
+    secs = '0' + String(secs);
+  }
+
+  timestamp.innerHTML = `${mins}:${secs}`;
+}
+
+// Set video progress
+function setVideoProgress() {
+  video.currentTime = (+progress.value * video.duration) / 100;
+}
+
+// Stop the video
+function stopVideo() {
+  video.currentTime = 0;
+  video.pause();
+}
+
+// Event Listeners
+video.addEventListener('click', toggleVideoStatus);
+video.addEventListener('pause', upadatePlayIcon);
+video.addEventListener('play', upadatePlayIcon);
+video.addEventListener('timeupdate', updateProgress);
+
+play.addEventListener('click', toggleVideoStatus);
+
+stop.addEventListener('click', stopVideo);
+
+progress.addEventListener('change', setVideoProgress);
+

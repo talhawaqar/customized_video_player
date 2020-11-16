@@ -11,7 +11,7 @@ This web app contains a custom video player with a customized look and controls.
 - Javascript
 
 ## Screenshot
-Project Design Screenshot : ![Project Design](images/screenshot.png)
+Project Design Screenshot : ![Project Design](images/Screenshot.png)
 
 ## Live Demo
 
