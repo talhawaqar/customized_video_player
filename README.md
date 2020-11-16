@@ -1,7 +1,4 @@
-# Form Validation
-
-![image](./imgs/Screenshot.png)
-
+# Customized Video Player
 This web app contains a custom video player with a customized look and controls. 
 
 ## Built With
